@@ -1,6 +1,9 @@
 import pygame,constants
 from player import Player
 from constants import *
+updatable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+Player.containers = (updatable, drawable)
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -12,9 +15,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        player.draw(screen)
+        for draws in drawable:
+            draws.draw(screen)
         pygame.display.flip()
-        player.update(dt)
+        updatable.update(dt)
 # limit the framerate to 60 FPS
         dt = clock.tick(60)/1000
 
